@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map>
+	<bundle bundleID="618" class="org.osgi.demo.mysimpleservice.activator.Activator" localization="OSGI-INF/l10n/bundle" name="MySimpleService" project="org.osgi.demo.mysimpleservice" provider="Pierrick MARIE"/>
+	<bundle bundleID="619" localization="OSGI-INF/l10n/bundle" name="Dressingengine Plug-in" project="org.ups.dressingengine" provider="UPS"/>
+	<bundle bundleID="620" class="org.osgi.demo.mysimpleclient.activator.Activator" localization="OSGI-INF/l10n/bundle" name="MySimpleClient" project="org.osgi.demo.mysimpleclient" provider="Pierrick MARIE"/>
+	<bundle bundleID="621" class="org.osgi.demo.mysimpleui.activator.Activator" localization="OSGI-INF/l10n/bundle" name="MySimpleUI" project="org.osgi.demo.mysimpleui" provider="Pierrick MARIE"/>
+</map>
