@@ -3,7 +3,7 @@ package org.ups.location;
 
 
 /**
- * Provide methods to get the location of a given device.<br>
+ * Provides methods to get the location of a given device.<br>
  * Clients must call {@link ILocation#getLatitude()} and
  * {@link ILocation#getLongitude()} methods as many times as they want to get
  * the current location. No listener mechanism is provided (i.e. clients won't

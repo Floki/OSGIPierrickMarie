@@ -11,17 +11,17 @@ public class DecoupledMain {
 	public static void main(final String[] args) {
 
 		/**
-		 * @javacetmal At least, the protected constructor disable me to create
-		 *             new classes model without use the factory class.
+		 * @javacetmal At least, the protected constructor prevents me from creating
+		 *             new classes model without using the factory class.
 		 */
 		City myCity = ModelFactory.instance().createCity("GothamCity");
 		Street myStreet = ModelFactory.instance().createStreet("Main Strip");
 
 		/**
-		 * @javacestmal This peace of code is incorrect.
+		 * @javacestmal This piece of code is incorrect.
 		 *              controlers.ICityManagement have to be used to add a
 		 *              street to a city. The public API of the City model does
-		 *              not forbidden that!
+		 *              not prevent that!
 		 */
 		System.out.println("Dirty code");
 		myCity.streets().add(myStreet);

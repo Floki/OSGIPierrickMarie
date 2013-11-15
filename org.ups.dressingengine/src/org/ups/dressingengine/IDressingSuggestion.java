@@ -9,7 +9,7 @@ public interface IDressingSuggestion {
 
 	boolean sunGlassesNeeded();
 
-	boolean umbrellaNeeded(); // Rihanna inside!
+	boolean umbrellaNeeded();
 
 	boolean coatNeeded();
 }

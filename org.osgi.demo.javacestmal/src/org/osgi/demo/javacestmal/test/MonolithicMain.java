@@ -10,16 +10,16 @@ public class MonolithicMain {
 	public static void main(final String[] args) {
 
 		/**
-		 * @javacetmal At least, the protected constructor disable me to create
-		 *             new classes model without use the factory class.
+		 * @javacetmal At least, the protected constructor prevents me from creating
+		 *             new classes model without using the factory class.
 		 */
 		City myCity = ModelFactory.instance().createCity("GothamCity");
 		Street myStreet = ModelFactory.instance().createStreet("Main Strip");
 
 		/**
-		 * @javacestmal The following peace of code is not possible with the
+		 * @javacestmal The following piece of code is not possible with the
 		 *              monolithic package (good point). But classes (model,
-		 *              controler and view) are contained in the same package.
+		 *              controller and view) are located in the same package.
 		 *              It's dirty !
 		 */
 		// System.out.println("Dirty code");
