@@ -67,7 +67,7 @@ public class LocationImpl implements ILocation {
 
 	public void addListener(ILocationListener listener) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	public void removeListener(ILocationListener listener) {

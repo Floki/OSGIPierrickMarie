@@ -8,3 +8,4 @@ Bundle-Vendor: UPS
 Import-Package: org.osgi.framework,
  org.ups.location
 Export-Package: org.ups.weather
+Bundle-Activator: org.ups.weather.activator.Activator
