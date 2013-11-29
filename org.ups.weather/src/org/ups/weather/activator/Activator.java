@@ -4,6 +4,7 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 
 import org.ups.location.ILocation;
+import org.ups.location.ILocationListener;
 import org.ups.weather.IWeather;
 import org.ups.weather.impl.WeatherImpl;
 import org.osgi.framework.BundleActivator;
@@ -25,10 +26,7 @@ public class Activator implements BundleActivator {
 		ServiceReference<?>[] references = context.getServiceReferences(ILocation.class.getName(), "(name=*)");
 
 		for (ServiceReference<?> reference : references) {
-			float latitude = ((ILocation) context.getService(reference)).getLatitude();
-			float longitude = ((ILocation) context.getService(reference)).getLongitude();
-			System.out.println("OSGi WEATHER : Location found.");
-			service = new WeatherImpl(latitude, longitude);
+			((ILocation) context.getService(reference)).addListener((ILocationListener) this.service);
 		}
 		
 		Dictionary<String, String> properties = new Hashtable<String, String>();

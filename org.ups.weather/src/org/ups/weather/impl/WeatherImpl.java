@@ -3,6 +3,7 @@ package org.ups.weather.impl;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,18 +12,16 @@ import org.ups.weather.IWeather;
 import org.ups.weather.IWeatherListener;
 import org.ups.weather.WeatherType;
 
-public class WeatherImpl implements IWeather, ILocationListener {
+public class WeatherImpl implements ILocationListener, IWeather  {
 
+	private ArrayList<IWeatherListener> listenerList;
 	private WeatherType weather = WeatherType.UNKNOWN;
 	
-	public void addListener(IWeatherListener listener) {
-		// TODO Auto-generated method stub
+	public WeatherImpl() {
+		listenerList = new ArrayList<IWeatherListener>();	
+		this.weather = WeatherType.UNKNOWN;
 	}
-
-	public void removeListener(IWeatherListener listener) {
-		// TODO Auto-generated method stub
-
-	}
+	
 
 	public WeatherType getCurrentWeather() {
 		return weather;
@@ -53,7 +52,6 @@ public class WeatherImpl implements IWeather, ILocationListener {
 	}
 
 	public void locationChanged(float lan, float lon) {
-		WeatherType type = WeatherType.UNKNOWN;
 		try {
 			URL urlTmp = new URL("http://api.openweathermap.org/data/2.5/weather?lat="+lan+"&lon="+lon);
 			System.out.println("URL = " + urlTmp);
@@ -70,11 +68,22 @@ public class WeatherImpl implements IWeather, ILocationListener {
 	        if(matcherWeather.find()) {
 	            System.out.println("Id Weather : " + matcherWeather.group(1));
 	            System.out.println("Corresponding : " + weatherNameFromId(Integer.parseInt(matcherWeather.group(1))));
-	            type = weatherNameFromId(Integer.parseInt(matcherWeather.group(1)));
+	            this.weather = weatherNameFromId(Integer.parseInt(matcherWeather.group(1)));
+	            for(int i = 0; i < listenerList.size(); i++) {
+	        		listenerList.get(i).weatherChanged(weather);
+	        	}
 	        }
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}		
+	}
+	
+	public void addListener(IWeatherListener listener) {
+		listenerList.add(listener);
+	}
+
+	public void removeListener(IWeatherListener listener) {
+		listenerList.remove(listener);
 	}
 }

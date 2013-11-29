@@ -3,6 +3,7 @@ package org.ups.location.impl;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -12,9 +13,17 @@ import org.ups.location.ILocationListener;
 
 public class LocationImpl implements ILocation {
 
-
-	private Coordinates computeLocation() {
-		Coordinates coordinates = new Coordinates();
+	private ArrayList<ILocationListener> listenerList;
+    float latitude;
+    float longitude;
+	
+	public LocationImpl() {
+		listenerList = new ArrayList<ILocationListener>();
+        latitude = 666;
+        longitude = 666;
+	}
+	
+	private void computeLocation() {
 		try
 	    {
 	    	// Use FreeGeoIP service for geolocation
@@ -22,6 +31,7 @@ public class LocationImpl implements ILocation {
 	        // To get returned JSON
 			String stringTmp = "";
 	        BufferedReader in = null;
+
 	        
 	        // Get informations from FreeGeoIP
 	        in = new BufferedReader(new InputStreamReader(urlFreeGeoIP.openStream()));
@@ -38,41 +48,43 @@ public class LocationImpl implements ILocation {
 
 	        if(matcherLatitude.find()) {
 	            System.out.println("LOCATION : Latitude : " + matcherLatitude.group(1));
-	            coordinates.latitude = Float.parseFloat(matcherLatitude.group(1));
+	            latitude = Float.parseFloat(matcherLatitude.group(1));
 	        }
 	        else {
 	        	System.out.println("LOCATION : Unable to get Latitude.");
 	        }
 	        if(matcherLongitude.find()) {
 	            System.out.println("LOCATION : Longitude : " + matcherLongitude.group(1));
-	            coordinates.longitude = Float.parseFloat(matcherLongitude.group(1));
+	            longitude = Float.parseFloat(matcherLongitude.group(1));
 	        }
 	        else {
 	        	System.out.println("LOCATION : Unable to get Longitude.");
+	        }
+	        if(latitude != 666 && longitude != 666) {
+	        	for(int i = 0; i < listenerList.size(); i++) {
+	        		listenerList.get(i).locationChanged(latitude, longitude);
+	        	}
 	        }
 	    }
 		catch(Exception e) {
 			System.out.println("LOCATION : Unable to get coordinates");
 		}
-        return coordinates;
 	}
 	
 	public float getLatitude() {
-		return this.computeLocation().latitude;
+		return this.latitude;
 	}
 
 	public float getLongitude() {
-		return this.computeLocation().longitude;
+		return this.longitude;
 	}
 
 	public void addListener(ILocationListener listener) {
-		// TODO Auto-generated method stub
-		
+		listenerList.add(listener);
 	}
 
 	public void removeListener(ILocationListener listener) {
-		// TODO Auto-generated method stub
-
+		listenerList.remove(listener);
 	}
 
 }
