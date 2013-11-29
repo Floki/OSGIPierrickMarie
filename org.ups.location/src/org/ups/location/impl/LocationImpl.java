@@ -72,10 +72,12 @@ public class LocationImpl implements ILocation {
 	}
 	
 	public float getLatitude() {
+		this.computeLocation();
 		return this.latitude;
 	}
 
 	public float getLongitude() {
+		this.computeLocation();
 		return this.longitude;
 	}
 
@@ -86,5 +88,4 @@ public class LocationImpl implements ILocation {
 	public void removeListener(ILocationListener listener) {
 		listenerList.remove(listener);
 	}
-
 }

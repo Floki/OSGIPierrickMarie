@@ -27,6 +27,9 @@ public class Activator implements BundleActivator {
 
 		for (ServiceReference<?> reference : references) {
 			((ILocation) context.getService(reference)).addListener((ILocationListener) this.service);
+			((ILocation) context.getService(reference)).getLatitude();
+			((ILocation) context.getService(reference)).getLongitude();
+			System.out.println("OSGi WEATHER : Current weather is " + this.service.getCurrentWeather());
 		}
 		
 		Dictionary<String, String> properties = new Hashtable<String, String>();

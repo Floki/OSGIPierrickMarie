@@ -66,8 +66,6 @@ public class WeatherImpl implements ILocationListener, IWeather  {
 	        Matcher matcherWeather = patternWeatherId.matcher(stringTmp);
 	
 	        if(matcherWeather.find()) {
-	            System.out.println("Id Weather : " + matcherWeather.group(1));
-	            System.out.println("Corresponding : " + weatherNameFromId(Integer.parseInt(matcherWeather.group(1))));
 	            this.weather = weatherNameFromId(Integer.parseInt(matcherWeather.group(1)));
 	            for(int i = 0; i < listenerList.size(); i++) {
 	        		listenerList.get(i).weatherChanged(weather);

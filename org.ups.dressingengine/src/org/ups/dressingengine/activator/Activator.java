@@ -33,11 +33,15 @@ public class Activator implements BundleActivator {
 	public void start(BundleContext context) throws Exception {
 		System.out.println("OSGi DRESSING_SUGGESTION : org.ups.dressingengine.Activator.start()");
 		
-		System.out.println("OSGi DRESSING_SUGGESTION : Connection to the Location module");
+		System.out.println("OSGi DRESSING_SUGGESTION : Connection to the Weather module");
 		ServiceReference<?>[] references = context.getServiceReferences(IWeather.class.getName(), "(name=*)");
 
 		for (ServiceReference<?> reference : references) {
 			((IWeather) context.getService(reference)).addListener((IWeatherListener) this.service);
+			((IWeather) context.getService(reference)).getCurrentWeather();
+			System.out.println("OSGi DRESSING_SUGGESTION : SunGlasses : " + this.service.sunGlassesNeeded());
+			System.out.println("OSGi DRESSING_SUGGESTION : Umbrella : " + this.service.umbrellaNeeded());
+			System.out.println("OSGi DRESSING_SUGGESTION : Coat : " + this.service.coatNeeded());
 		}
 		
 		Dictionary<String, String> properties = new Hashtable<String, String>();
