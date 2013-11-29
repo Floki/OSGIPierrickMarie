@@ -1,7 +1,7 @@
+package org.ups.location.impl;
 import java.util.Scanner;
 
 import org.ups.location.ILocation;
-import org.ups.location.impl.LocationImpl;
 
 
 public class Main {
@@ -10,6 +10,7 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		System.out.println("LOCATION TEST.");
 		ILocation location = new LocationImpl();
 		System.out.println(location);
 		Scanner lectureClavier = new Scanner(System.in);
@@ -18,6 +19,7 @@ public class Main {
 	    	System.out.println(location.getLatitude() + "," + location.getLongitude());
 	    	choix = lectureClavier.nextInt();
 	    }
+	    System.out.println("END LOCATION TEST.");
 	}
 
 }

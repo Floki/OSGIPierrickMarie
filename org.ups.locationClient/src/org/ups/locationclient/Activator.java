@@ -9,6 +9,7 @@ public class Activator implements BundleActivator {
 
 	@Override
 	public void start(final BundleContext context) throws Exception {
+		System.out.println("OSGi LOCATION CLIENT: org.ups.location.Activator.start()");
 		ServiceReference<?>[] references = context.getServiceReferences(ILocation.class.getName(), "(name=*)");
 
 		for (ServiceReference<?> reference : references) {
@@ -20,6 +21,7 @@ public class Activator implements BundleActivator {
 
 	@Override
 	public void stop(final BundleContext context) throws Exception {
+		System.out.println("OSGi LOCATION CLIENT: org.ups.location.Activator.stop()");
 	}
 
 }
