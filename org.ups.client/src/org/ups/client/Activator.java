@@ -29,18 +29,24 @@ public class Activator implements BundleActivator {
 		while(choice != 0) {
 			switch(choice) {
 				case 1:
-					ServiceReference<?>[] references = context.getServiceReferences(ILocation.class.getName(), "(name=*)");
-					float latitude = 666;
-					float longitude = 666;
-					for (ServiceReference<?> reference : references) {
-						latitude = ((ILocation) context.getService(reference)).getLatitude();
-						longitude = ((ILocation) context.getService(reference)).getLongitude();
+					try {
+						ServiceReference<?>[] references = context.getServiceReferences(ILocation.class.getName(), "(name=*)");
+						float latitude = 666;
+						float longitude = 666;
+						for (ServiceReference<?> reference : references) {
+							latitude = ((ILocation) context.getService(reference)).getLatitude();
+							longitude = ((ILocation) context.getService(reference)).getLongitude();
+						}
+						if(latitude == 666 || longitude == 666) {
+							System.out.println("			   Impossible de retrouver votre position.");
+						}
+						else {
+							System.out.println("			   Votre position est (" + latitude + ',' + longitude +")");
+						}
 					}
-					if(latitude == 666 || longitude == 666) {
-						System.out.println("			   Impossible de retrouver votre position.");
-					}
-					else {
-						System.out.println("			   Votre position est (" + latitude + ',' + longitude +")");
+					catch(Exception e) {
+						System.out.println("			   Impossible de retrouver votre position");
+						e.printStackTrace();
 					}
 				break;
 				case 2:
