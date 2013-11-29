@@ -29,16 +29,22 @@ public class Activator implements BundleActivator {
 		while(choice != 0) {
 			switch(choice) {
 				case 1:
-					ILocation locationObject = ((ILocation) serviceObject("ILocation"));
-					if(locationObject != null) {
-						System.out.println("Votre position est (" + locationObject.getLatitude() + ',' + locationObject.getLongitude() +")");
+					ServiceReference<?>[] references = context.getServiceReferences(ILocation.class.getName(), "(name=*)");
+					float latitude = 666;
+					float longitude = 666;
+					for (ServiceReference<?> reference : references) {
+						latitude = ((ILocation) context.getService(reference)).getLatitude();
+						longitude = ((ILocation) context.getService(reference)).getLongitude();
+					}
+					if(latitude == 666 || longitude == 666) {
+						System.out.println("			   Impossible de retrouver votre position.");
+					}
+					else {
+						System.out.println("			   Votre position est (" + latitude + ',' + longitude +")");
 					}
 				break;
 				case 2:
-					IWeather weatherObject = ((IWeather) serviceObject("ILocation"));
-					if(weatherObject != null) {
-						System.out.println("La météo est " + weatherObject.getCurrentWeather());
-					}
+					
 				break;
 				case 3:
 					
