@@ -3,5 +3,8 @@ install "file:\\C:\plugins\org.ups.locationClient_1.0.0.jar"
 install "file:\\C:\plugins\org.ups.weather_1.0.0.jar"
 install "file:\\C:\plugins\org.ups.weatherClient_1.0.0.jar" 
 install "file:\\C:\plugins\org.ups.dressingengine_1.0.0.jar"
+install "file:\\c:\plugins\org.osgi.demo.mysimpleui_1.0.0.jar"
+install "file:\\c:\plugins\org.ups.client_1.0.0.jar"
+
  
 
