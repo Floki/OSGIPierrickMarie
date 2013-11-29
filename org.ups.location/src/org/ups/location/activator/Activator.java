@@ -16,7 +16,7 @@ public class Activator implements BundleActivator {
 		service = new LocationImpl();
 	}
 
-	public void start(final BundleContext context) throws Exception {
+	public void start(final BundleContext context)  {
 		try {
 			System.out.println("OSGi LOCATION: org.ups.location.Activator.start()");
 	
