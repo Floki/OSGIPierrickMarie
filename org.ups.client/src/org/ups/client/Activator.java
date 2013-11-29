@@ -8,6 +8,7 @@ import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.ups.location.ILocation;
 import org.ups.weather.IWeather;
+import org.ups.weather.IWeatherListener;
 
 public class Activator implements BundleActivator {
 
@@ -31,6 +32,9 @@ public class Activator implements BundleActivator {
 				case 1:
 					try {
 						ServiceReference<?>[] references = context.getServiceReferences(ILocation.class.getName(), "(name=*)");
+						if(references == null) {
+							System.out.println("OSGi CLIENT UPS : Impossible de contacter le bundle " + ILocation.class.getName() + ", vérifié qu'il soit bien initialisé ou redemarrer OSGi");
+						}
 						float latitude = 666;
 						float longitude = 666;
 						for (ServiceReference<?> reference : references) {
@@ -50,7 +54,14 @@ public class Activator implements BundleActivator {
 					}
 				break;
 				case 2:
-					
+					ServiceReference<?>[] references = context.getServiceReferences(IWeather.class.getName(), "(name=*)");
+					if(references == null) {
+						System.out.println("OSGi CLIENT UPS : Impossible de contacter le bundle " + IWeather.class.getName() + ", vérifié qu'il soit bien initialisé ou redemarrer OSGi");
+					}
+			
+					for (ServiceReference<?> reference : references) {
+						System.out.println("			  Le temps est " + ((IWeather) context.getService(reference)).getCurrentWeather());	
+					}
 				break;
 				case 3:
 					

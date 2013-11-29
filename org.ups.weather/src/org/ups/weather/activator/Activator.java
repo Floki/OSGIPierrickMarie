@@ -23,8 +23,12 @@ public class Activator implements BundleActivator {
 		try {
 			System.out.println("OSGi WEATHER : org.ups.weather.Activator.start()");
 	
-			System.out.println("OSGi WEATHER : Connection to the Location module");
+			System.out.println("OSGi WEATHER : Connection to the Location module (Name : "+ILocation.class.getName()+")" );
+			
 			ServiceReference<?>[] references = context.getServiceReferences(ILocation.class.getName(), "(name=*)");
+			if(references == null) {
+				System.out.println("OSGi WEATHER : Impossible de contacter le bundle " + ILocation.class.getName() + ", vérifié qu'il soit bien initialisé ou redemarrer OSGi");
+			}
 	
 			for (ServiceReference<?> reference : references) {
 				((ILocation) context.getService(reference)).addListener((ILocationListener) this.service);

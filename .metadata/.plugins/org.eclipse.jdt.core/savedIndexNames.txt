@@ -1,7 +1,6 @@
 INDEX VERSION 1.126+C:\Dev\Collabo\OSGIPierrickMarie\.metadata\.plugins\org.eclipse.jdt.core
 2938751786.index
 1406857487.index
-628372254.index
 1863284412.index
 2166559574.index
 2443546050.index

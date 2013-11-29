@@ -18,11 +18,12 @@ public class Activator implements BundleActivator {
 
 	public void start(final BundleContext context)  {
 		try {
-			System.out.println("OSGi LOCATION: org.ups.location.Activator.start()");
+			System.out.println("OSGi LOCATION: org.ups.location.Activator.start() (Name : "+ILocation.class.getName()+")");
 	
 			Dictionary<String, String> properties = new Hashtable<String, String>();
 			properties.put("name", "org.ups.location");
 			context.registerService(ILocation.class.getName(), service, properties);
+			
 		}
 		catch(Exception e){
 			System.out.println("OSGi LOCATION : Erreur lors du lancement du module location.");

@@ -14,8 +14,6 @@ import org.ups.dressingengine.impl.DressingSuggestionImpl;
 import org.ups.weather.IWeather;
 import org.ups.weather.IWeatherListener;
 
-
-
 /**
  *
  */
@@ -36,6 +34,9 @@ public class Activator implements BundleActivator {
 			
 			System.out.println("OSGi DRESSING_SUGGESTION : Connection to the Weather module");
 			ServiceReference<?>[] references = context.getServiceReferences(IWeather.class.getName(), "(name=*)");
+			if(references == null) {
+				System.out.println("OSGi DRESSING_SUGGESTION : Impossible de contacter le bundle " + IWeather.class.getName() + ", vérifié qu'il soit bien initialisé ou redemarrer OSGi");
+			}
 	
 			for (ServiceReference<?> reference : references) {
 				((IWeather) context.getService(reference)).addListener((IWeatherListener) this.service);
