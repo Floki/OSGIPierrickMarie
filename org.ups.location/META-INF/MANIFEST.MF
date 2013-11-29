@@ -3,5 +3,9 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Location Plug-in
 Bundle-SymbolicName: org.ups.location
 Bundle-Version: 1.0.0
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-Vendor: UPS
+Import-Package: org.osgi.framework
+Bundle-Activator: org.ups.location.activator.Activator
+Bundle-ActivationPolicy: lazy
+Export-Package: org.ups.location
