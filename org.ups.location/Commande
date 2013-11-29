@@ -1,1 +1,1 @@
-install file "C:\plugins\org.ups.location_1.0.0.jar"
+install "file:\\C:\plugins\org.ups.location_1.0.0.jar"
