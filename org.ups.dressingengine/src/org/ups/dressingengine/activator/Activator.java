@@ -5,11 +5,8 @@ import java.util.Hashtable;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
 import org.ups.dressingengine.IDressingSuggestion;
 import org.ups.dressingengine.impl.DressingSuggestionImpl;
-import org.ups.weather.IWeather;
-import org.ups.weather.IWeatherListener;
 
 public class Activator implements BundleActivator {
 	

@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,9 +17,9 @@ public class LocationImpl implements ILocation {
     float longitude;
 	
 	public LocationImpl() {
-		listenerList = new ArrayList<ILocationListener>();
-        latitude = 666;
-        longitude = 666;
+		this.listenerList = new ArrayList<ILocationListener>();
+        this.latitude = 666;
+        this.longitude = 666;
 	}
 	
 	private void computeLocation() {
@@ -48,21 +47,21 @@ public class LocationImpl implements ILocation {
 
 	        if(matcherLatitude.find()) {
 	            //System.out.println("LOCATION : Latitude : " + matcherLatitude.group(1));
-	            latitude = Float.parseFloat(matcherLatitude.group(1));
+	            this.latitude = Float.parseFloat(matcherLatitude.group(1));
 	        }
 	        else {
 	        	System.err.println("LOCATION : Unable to get Latitude.");
 	        }
 	        if(matcherLongitude.find()) {
 	            //System.out.println("LOCATION : Longitude : " + matcherLongitude.group(1));
-	            longitude = Float.parseFloat(matcherLongitude.group(1));
+	            this.longitude = Float.parseFloat(matcherLongitude.group(1));
 	        }
 	        else {
 	        	System.err.println("LOCATION : Unable to get Longitude.");
 	        }
-	        if(latitude != 666 && longitude != 666) {
-	        	for(int i = 0; i < listenerList.size(); i++) {
-	        		listenerList.get(i).locationChanged(latitude, longitude);
+	        if(this.latitude != 666 && this.longitude != 666) {
+	        	for(int i = 0; i < this.listenerList.size(); i++) {
+	        		this.listenerList.get(i).locationChanged(this.latitude, this.longitude);
 	        	}
 	        }
 	    }
@@ -82,10 +81,10 @@ public class LocationImpl implements ILocation {
 	}
 
 	public void addListener(ILocationListener listener) {
-		listenerList.add(listener);
+		this.listenerList.add(listener);
 	}
 
 	public void removeListener(ILocationListener listener) {
-		listenerList.remove(listener);
+		this.listenerList.remove(listener);
 	}
 }

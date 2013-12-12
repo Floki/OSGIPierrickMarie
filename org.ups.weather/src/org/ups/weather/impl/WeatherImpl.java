@@ -18,13 +18,13 @@ public class WeatherImpl implements ILocationListener, IWeather  {
 	private WeatherType weather = WeatherType.UNKNOWN;
 	
 	public WeatherImpl() {
-		listenerList = new ArrayList<IWeatherListener>();	
+		this.listenerList = new ArrayList<IWeatherListener>();	
 		this.weather = WeatherType.UNKNOWN;
 	}
 	
 
 	public WeatherType getCurrentWeather() {
-		return weather;
+		return this.weather;
 	}
 
 	public WeatherType getWeather(int nbHoursFromNow) {
@@ -67,8 +67,8 @@ public class WeatherImpl implements ILocationListener, IWeather  {
 	
 	        if(matcherWeather.find()) {
 	            this.weather = weatherNameFromId(Integer.parseInt(matcherWeather.group(1)));
-	            for(int i = 0; i < listenerList.size(); i++) {
-	        		listenerList.get(i).weatherChanged(weather);
+	            for(int i = 0; i < this.listenerList.size(); i++) {
+	        		this.listenerList.get(i).weatherChanged(this.weather);
 	        	}
 	        }
 		}
@@ -78,10 +78,10 @@ public class WeatherImpl implements ILocationListener, IWeather  {
 	}
 	
 	public void addListener(IWeatherListener listener) {
-		listenerList.add(listener);
+		this.listenerList.add(listener);
 	}
 
 	public void removeListener(IWeatherListener listener) {
-		listenerList.remove(listener);
+		this.listenerList.remove(listener);
 	}
 }
