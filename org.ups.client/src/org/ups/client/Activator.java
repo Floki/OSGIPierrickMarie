@@ -6,6 +6,7 @@ import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
+import org.ups.dressingengine.IDressingSuggestion;
 import org.ups.location.ILocation;
 import org.ups.weather.IWeather;
 import org.ups.weather.IWeatherListener;
@@ -23,6 +24,7 @@ public class Activator implements BundleActivator {
 	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
 	 */
 	public void start(BundleContext bundleContext) throws Exception {
+		ServiceReference<?>[] references;
 		Activator.context = bundleContext;
 		Scanner in = new Scanner(System.in);
 		displayMenu();
@@ -31,7 +33,7 @@ public class Activator implements BundleActivator {
 			switch(choice) {
 				case 1:
 					try {
-						ServiceReference<?>[] references = context.getServiceReferences(ILocation.class.getName(), "(name=*)");
+						references = context.getServiceReferences(ILocation.class.getName(), "(name=*)");
 						if(references == null) {
 							System.out.println("OSGi CLIENT UPS : Impossible de contacter le bundle " + ILocation.class.getName() + ", vérifié qu'il soit bien initialisé ou redemarrer OSGi");
 						}
@@ -50,21 +52,58 @@ public class Activator implements BundleActivator {
 					}
 					catch(Exception e) {
 						System.out.println("			   Impossible de retrouver votre position");
-						e.printStackTrace();
 					}
 				break;
 				case 2:
-					ServiceReference<?>[] references = context.getServiceReferences(IWeather.class.getName(), "(name=*)");
-					if(references == null) {
-						System.out.println("OSGi CLIENT UPS : Impossible de contacter le bundle " + IWeather.class.getName() + ", vérifié qu'il soit bien initialisé ou redemarrer OSGi");
+					try {
+						references = context.getServiceReferences(IWeather.class.getName(), "(name=*)");
+						if(references == null) {
+							System.out.println("OSGi CLIENT UPS : Impossible de contacter le bundle " + IWeather.class.getName() + ", vérifié qu'il soit bien initialisé ou redemarrer OSGi");
+						}
+				
+						for (ServiceReference<?> reference : references) {
+							System.out.println("			  Le temps est " + ((IWeather) context.getService(reference)).getCurrentWeather());	
+						}
 					}
-			
-					for (ServiceReference<?> reference : references) {
-						System.out.println("			  Le temps est " + ((IWeather) context.getService(reference)).getCurrentWeather());	
+					catch(Exception e) {
+						System.out.println("			   Impossible de retrouver la météo du jour");
 					}
 				break;
 				case 3:
-					
+					try {
+						references = context.getServiceReferences(IDressingSuggestion.class.getName(), "(name=*)");
+						if(references == null) {
+							System.out.println("OSGi CLIENT UPS : Impossible de contacter le bundle " + IDressingSuggestion.class.getName() + ", vérifié qu'il soit bien initialisé ou redemarrer OSGi");
+						}
+				
+						for (ServiceReference<?> reference : references) {
+							boolean umbrella = ((IDressingSuggestion) context.getService(reference)).umbrellaNeeded();
+							boolean glasses = ((IDressingSuggestion) context.getService(reference)).sunGlassesNeeded();
+							boolean coat = ((IDressingSuggestion) context.getService(reference)).coatNeeded();
+							System.out.println("			  Nous vous conseillons : ");
+							if(umbrella) {
+								System.out.print("			  	De prendre un parapluie, ");
+							}
+							else {
+								System.out.print("			  	De ne pas prendre un parapluie, ");
+							}
+							if(coat) {
+								System.out.println("de prendre un manteau, ");
+							}
+							else {
+								System.out.println("de ne pas prendre un manteau, ");
+							}
+							if(glasses) {
+								System.out.println("et de prendre des lunettes de soleil.");	
+							}
+							else {
+								System.out.println("et de ne pas prendre des lunettes de soleil.");
+							}
+						}
+					}
+					catch(Exception e) {
+						System.out.println("			   Impossible de retrouver les conseils du jour");
+					}
 				break;
 			}
 			displayMenu();
