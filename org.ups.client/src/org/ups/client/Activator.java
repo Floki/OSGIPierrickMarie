@@ -6,6 +6,7 @@ import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
+import org.osgi.util.tracker.ServiceTracker;
 import org.ups.dressingengine.IDressingSuggestion;
 import org.ups.location.ILocation;
 import org.ups.weather.IWeather;
@@ -14,6 +15,8 @@ import org.ups.weather.IWeatherListener;
 public class Activator implements BundleActivator {
 
 	private static BundleContext context;
+	private ServiceTracker serviceTracker;
+
 
 	static BundleContext getContext() {
 		return context;
@@ -23,7 +26,7 @@ public class Activator implements BundleActivator {
 	 * (non-Javadoc)
 	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
 	 */
-	public void start(BundleContext bundleContext) throws Exception {
+	public void start(BundleContext bundleContext) {
 		ServiceReference<?>[] references;
 		Activator.context = bundleContext;
 		Scanner in = new Scanner(System.in);
@@ -105,21 +108,28 @@ public class Activator implements BundleActivator {
 						System.out.println("			   Impossible de retrouver les conseils du jour");
 					}
 				break;
+				case 4:
+					try {
+						// Register directly with the service
+						if(serviceTracker == null) {
+						    DressingSTC dressingTracker = new DressingSTC(context);
+						    serviceTracker = new ServiceTracker(context, IDressingSuggestion.class.getName(), dressingTracker);
+						    serviceTracker.open();
+						}
+						else {
+							serviceTracker.close();
+							serviceTracker = null;
+						}
+					}
+					catch(Exception e) {
+						e.printStackTrace();
+					}
+				break;
 			}
 			displayMenu();
 			choice = in.nextInt();
 		}
-	}
-	
-	private Object serviceObject(String name) throws InvalidSyntaxException {
-		Object returnedObject = null;
-		ServiceReference<?>[] references = context.getServiceReferences(name, "(name=*)");
-
-		for (ServiceReference<?> reference : references) {
-			returnedObject = context.getService(reference);
-		}
-		
-		return returnedObject;
+		in.close();
 	}
 	
 	private void displayMenu() {
@@ -127,15 +137,13 @@ public class Activator implements BundleActivator {
 		System.out.println("			1 : afficher votre position GPS");
 		System.out.println("			2 : information sur la météo");
 		System.out.println("			3 : conseil d'habillement");
+		System.out.println("			4 : démarrer/arrêter le ServiceTrackerCustomizer d'habillement");
 		System.out.println("			0 : quitter");
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
-	 */
 	public void stop(BundleContext bundleContext) throws Exception {
 		Activator.context = null;
+		serviceTracker.close();
 	}
 
 }

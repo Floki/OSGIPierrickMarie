@@ -47,18 +47,18 @@ public class LocationImpl implements ILocation {
 	        Matcher matcherLongitude = patternLongitude.matcher(stringTmp);
 
 	        if(matcherLatitude.find()) {
-	            System.out.println("LOCATION : Latitude : " + matcherLatitude.group(1));
+	            //System.out.println("LOCATION : Latitude : " + matcherLatitude.group(1));
 	            latitude = Float.parseFloat(matcherLatitude.group(1));
 	        }
 	        else {
-	        	System.out.println("LOCATION : Unable to get Latitude.");
+	        	System.err.println("LOCATION : Unable to get Latitude.");
 	        }
 	        if(matcherLongitude.find()) {
-	            System.out.println("LOCATION : Longitude : " + matcherLongitude.group(1));
+	            //System.out.println("LOCATION : Longitude : " + matcherLongitude.group(1));
 	            longitude = Float.parseFloat(matcherLongitude.group(1));
 	        }
 	        else {
-	        	System.out.println("LOCATION : Unable to get Longitude.");
+	        	System.err.println("LOCATION : Unable to get Longitude.");
 	        }
 	        if(latitude != 666 && longitude != 666) {
 	        	for(int i = 0; i < listenerList.size(); i++) {
@@ -67,7 +67,7 @@ public class LocationImpl implements ILocation {
 	        }
 	    }
 		catch(Exception e) {
-			System.out.println("LOCATION : Unable to get coordinates");
+			System.err.println("LOCATION : Unable to get coordinates");
 		}
 	}
 	

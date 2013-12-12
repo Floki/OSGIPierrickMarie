@@ -8,3 +8,4 @@ Bundle-Vendor: UPS
 Import-Package: org.osgi.framework
 Require-Bundle: org.ups.weather
 Bundle-Activator: org.ups.dressingengine.activator.Activator
+Export-Package: org.ups.dressingengine
